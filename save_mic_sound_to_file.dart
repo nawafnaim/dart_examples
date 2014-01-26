@@ -41,7 +41,7 @@ void main() {
       writeUTFBytes(view, 8, 'WAVE');
       
       // FMT sub-chunk
-      writeUTFBytes(view, 12, 'fmt');
+      writeUTFBytes(view, 12, 'fmt ');
       view.setUint32(16, 16, Endianness.LITTLE_ENDIAN);
       view.setUint16(20, 1, Endianness.LITTLE_ENDIAN);
       
