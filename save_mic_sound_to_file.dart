@@ -17,7 +17,7 @@ void main() {
   sampleRate = 44100;
   recording = true;
   
-  // add pause button
+  // add stop button
   ButtonElement stopBtn = new ButtonElement()
     ..text = 'Stop'
     ..onClick.listen((_) { 
@@ -37,31 +37,31 @@ void main() {
       
       // RIFF chunk descriptor
       writeUTFBytes(view, 0, 'RIFF');
-      view.setUint32(4, 44 + interleaved.length * 2);
+      view.setUint32(4, 44 + interleaved.length * 2, Endianness.LITTLE_ENDIAN);
       writeUTFBytes(view, 8, 'WAVE');
       
       // FMT sub-chunk
-      writeUTFBytes(view, 12, 'fmt ');
-      view.setUint32(16, 16);
-      view.setUint16(20, 1);
+      writeUTFBytes(view, 12, 'fmt');
+      view.setUint32(16, 16, Endianness.LITTLE_ENDIAN);
+      view.setUint16(20, 1, Endianness.LITTLE_ENDIAN);
       
       // stereo (2 channels)
-      view.setUint16(22, 2);
-      view.setUint32(24, sampleRate);
-      view.setUint32(28, sampleRate * 4);
-      view.setUint16(32, 4);
-      view.setUint16(34, 16);
+      view.setUint16(22, 2, Endianness.LITTLE_ENDIAN);
+      view.setUint32(24, sampleRate, Endianness.LITTLE_ENDIAN);
+      view.setUint32(28, sampleRate * 4, Endianness.LITTLE_ENDIAN);
+      view.setUint16(32, 4, Endianness.LITTLE_ENDIAN);
+      view.setUint16(34, 16, Endianness.LITTLE_ENDIAN);
       
       // data sub-chunk
       writeUTFBytes(view, 36, 'data');
-      view.setUint32(40, interleaved.length * 2);
+      view.setUint32(40, interleaved.length * 2, Endianness.LITTLE_ENDIAN);
       
       // write the PCM samples
       var lng = interleaved.length;
       var index = 44;
       var volume = 1;
       for (var i = 0; i < lng; i++){
-        view.setInt16(index, (interleaved[i] * (0x7FFF * volume)).truncate());
+        view.setInt16(index, (interleaved[i] * (0x7FFF * volume)).truncate(), Endianness.LITTLE_ENDIAN);
         index += 2;
       }
       
