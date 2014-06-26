@@ -33,7 +33,7 @@ void main() {
       
       // we create our wav file
       var buffer = new Uint8List(44 + interleaved.length * 2);
-      ByteData view = new ByteData.view(buffer);
+      ByteData view = new ByteData.view(buffer.buffer);
       
       // RIFF chunk descriptor
       writeUTFBytes(view, 0, 'RIFF');
