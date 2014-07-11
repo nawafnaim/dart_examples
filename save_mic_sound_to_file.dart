@@ -87,7 +87,7 @@ void main() {
     audioInput.connectNode(volume);
   
     int bufferSize = 2048;
-    ScriptProcessorNode recorder = context.createJavaScriptNode(bufferSize, 2, 2);
+    ScriptProcessorNode recorder = context.createScriptProcessor(bufferSize, 2, 2);
   
     recorder.onAudioProcess.listen((AudioProcessingEvent e) {
       if (!recording) return;
